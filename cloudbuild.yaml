@@ -17,11 +17,9 @@ steps:
 - id: "deploy main.py"
   name: 'gcr.io/cloud-builders/gcloud'
   args:
-  - functions
-  - deploy
-  - hello_get
-  - --runtime
-  - python37
-  - --trigger-http
-  - --source
-  - dummy-tool1/src
+  - deployment-manager
+  - deployments 
+  - update
+  - my-first-deployment-06
+  - --config
+  - deploy/dummy-tools.yaml
