@@ -14,7 +14,6 @@ resources:
     bucketName: dmt-auto-seo
     codeLocation: dummy-tool1/src/
     codeBucket: trial01-deployment
-    codeBucketObject: dummy-tool1-src.zip
     location: us-central1
     timeout: 60s
     runtime: python37
@@ -27,7 +26,6 @@ resources:
     bucketName: dmt-auto-seo
     codeLocation: dummy-tool2/src/
     codeBucket: trial01-deployment
-    codeBucketObject: dummy-tool2-src.zip
     location: us-central1
     timeout: 60s
     runtime: python37
