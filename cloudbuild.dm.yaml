@@ -1,0 +1,26 @@
+steps:
+- id: "download crypted credential"
+  name: gcr.io/cloud-builders/gsutil
+  args: ['cp', '$_CIPHER_CREDENTIAL', 'credential.enc.json']
+- id: "decrypt auto-seo-gauge credentials"
+  name: gcr.io/cloud-builders/gcloud
+  args:
+  - kms
+  - decrypt
+  - --ciphertext-file=credential.enc.json
+  - --plaintext-file=credential.dec.json
+  - --location=global
+  - --keyring=gcbkeyring
+  - --key=step-key
+- id: "run behave"
+  name: 'gcr.io/trial01-239405/behave-trial01:latest'
+  env: ['GOOGLE_APPLICATION_CREDENTIALS=credential.dec.json']
+- id: "deploy main.py"
+  name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - deployment-manager
+  - deployments 
+  - update
+  - my-first-deployment-06
+  - --config
+  - deploy/dummy-tools.yaml

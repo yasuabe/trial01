@@ -1,0 +1,15 @@
+steps:
+- id: "decrypt auto-seo-gauge credentials"
+  name: gcr.io/cloud-builders/gcloud
+  args:
+  - kms
+  - decrypt
+  - --ciphertext-file=$_CIPHER_CREDENTIAL
+  - --plaintext-file=credential.dec.json
+  - --location=global
+  - --keyring=gcbkeyring
+  - --key=step-key
+- id: "run behave"
+  name: 'gcr.io/trial01-239405/behave-trial01:latest'
+  env: ['GOOGLE_APPLICATION_CREDENTIALS=credential.dec.json']
+

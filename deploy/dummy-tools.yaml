@@ -1,0 +1,39 @@
+imports:
+- path: dummy-tools-deployment.py
+- path: dummy-tool1/src/main.py
+- path: dummy-tool1/src/requirements.txt
+- path: dummy-tool2/src/main.py
+- path: dummy-tool2/src/requirements.txt
+
+resources:
+# ここに個別の Cloud Functions のデプロイを追記していく
+- name: function
+  type: dummy-tools-deployment.py
+  properties:
+    functionName: dummy-tool1-fc
+    bucketName: dmt-auto-seo
+    codeLocation: dummy-tool1/src/
+    codeBucket: trial01-deployment
+    codeBucketObject: dummy-tool1-src.zip
+    location: us-central1
+    timeout: 60s
+    runtime: python37
+    availableMemoryMb: 256
+    entryPoint: hello_get
+- name: function2
+  type: dummy-tools-deployment.py
+  properties:
+    functionName: dummy-tool2-fc
+    bucketName: dmt-auto-seo
+    codeLocation: dummy-tool2/src/
+    codeBucket: trial01-deployment
+    codeBucketObject: dummy-tool2-src.zip
+    location: us-central1
+    timeout: 60s
+    runtime: python37
+    availableMemoryMb: 256
+    entryPoint: hello_get
+- name: test-topic01
+  type: pubsub.v1.topic
+  properties:
+    topic: test-topics01
